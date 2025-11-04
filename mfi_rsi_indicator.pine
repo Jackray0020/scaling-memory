@@ -1,4 +1,4 @@
-//@version=5
+//@version=6
 indicator("MFI-RSI Combo Indicator", shorttitle="MFI-RSI", overlay=false)
 
 // ============================================================================
@@ -17,49 +17,16 @@ rsiColor = input.color(color.new(color.orange, 0), title="RSI Color")
 // ============================================================================
 // MFI is a momentum indicator that uses price and volume to identify 
 // overbought or oversold conditions. It's often called "volume-weighted RSI"
-
-// Calculate typical price (average of high, low, and close)
-typicalPrice = (high + low + close) / 3
-
-// Calculate raw money flow (typical price * volume)
-rawMoneyFlow = typicalPrice * volume
-
-// Determine if money flow is positive or negative based on price direction
-positiveFlow = typicalPrice > typicalPrice[1] ? rawMoneyFlow : 0
-negativeFlow = typicalPrice < typicalPrice[1] ? rawMoneyFlow : 0
-
-// Sum positive and negative flows over the specified period
-positiveMoneyFlow = ta.sum(positiveFlow, mfiLength)
-negativeMoneyFlow = ta.sum(negativeFlow, mfiLength)
-
-// Calculate money flow ratio while preventing division-by-zero errors
-moneyFlowRatio = negativeMoneyFlow == 0 ? na : positiveMoneyFlow / negativeMoneyFlow
-
-// Calculate MFI (ranges from 0 to 100) and gracefully handle bars with no money flow
-mfi = negativeMoneyFlow == 0 ? (positiveMoneyFlow == 0 ? nz(mfi[1], 50) : 100) : 100 - (100 / (1 + moneyFlowRatio))
+// Use the built-in ta.mfi function, which implements the standard Money Flow Index formula.
+mfi = ta.mfi(high, low, close, volume, mfiLength)
 
 // ============================================================================
 // RELATIVE STRENGTH INDEX (RSI) CALCULATION
 // ============================================================================
 // RSI is a momentum oscillator that measures the speed and magnitude of 
 // price changes to identify overbought or oversold conditions
-
-// Calculate price changes
-priceChange = ta.change(close)
-
-// Separate gains and losses
-gain = priceChange > 0 ? priceChange : 0
-loss = priceChange < 0 ? -priceChange : 0
-
-// Calculate average gain and average loss using RMA (Relative Moving Average)
-avgGain = ta.rma(gain, rsiLength)
-avgLoss = ta.rma(loss, rsiLength)
-
-// Calculate relative strength
-rs = avgGain / avgLoss
-
-// Calculate RSI (ranges from 0 to 100)
-rsi = 100 - (100 / (1 + rs))
+// Use the built-in ta.rsi function, which implements the standard RSI formula.
+rsi = ta.rsi(close, rsiLength)
 
 // ============================================================================
 // PLOTTING

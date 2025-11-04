@@ -101,7 +101,7 @@ To use alerts:
 
 ## Technical Details
 
-- **Pine Script Version**: 5
+- **Pine Script Version**: 6
 - **Indicator Type**: Oscillator (displayed in separate panel)
 - **Overlay**: False (displays below the main chart)
 - **Calculation**: Real-time updates with each new bar
