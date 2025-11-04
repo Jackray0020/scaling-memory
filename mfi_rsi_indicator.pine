@@ -1,0 +1,78 @@
+//@version=6
+indicator("MFI-RSI Combo Indicator", shorttitle="MFI-RSI", overlay=false)
+
+// ============================================================================
+// INPUT PARAMETERS
+// ============================================================================
+// Allow users to customize the calculation periods for both indicators
+mfiLength = input.int(14, title="MFI Period", minval=1, maxval=200)
+rsiLength = input.int(14, title="RSI Period", minval=1, maxval=200)
+
+// Color inputs for visual customization
+mfiColor = input.color(color.new(color.blue, 0), title="MFI Color")
+rsiColor = input.color(color.new(color.orange, 0), title="RSI Color")
+
+// ============================================================================
+// MONEY FLOW INDEX (MFI) CALCULATION
+// ============================================================================
+// MFI is a momentum indicator that uses price and volume to identify 
+// overbought or oversold conditions. It's often called "volume-weighted RSI"
+// Use the built-in ta.mfi function, which implements the standard Money Flow Index formula.
+mfi = ta.mfi(high, low, close, volume, mfiLength)
+
+// ============================================================================
+// RELATIVE STRENGTH INDEX (RSI) CALCULATION
+// ============================================================================
+// RSI is a momentum oscillator that measures the speed and magnitude of 
+// price changes to identify overbought or oversold conditions
+// Use the built-in ta.rsi function, which implements the standard RSI formula.
+rsi = ta.rsi(close, rsiLength)
+
+// ============================================================================
+// PLOTTING
+// ============================================================================
+// Plot MFI line
+plot(mfi, title="MFI", color=mfiColor, linewidth=2)
+
+// Plot RSI line
+plot(rsi, title="RSI", color=rsiColor, linewidth=2)
+
+// ============================================================================
+// REFERENCE LEVELS
+// ============================================================================
+// Add horizontal reference lines for key levels
+// 70 and above typically indicates overbought conditions
+// 30 and below typically indicates oversold conditions
+// 50 is the centerline
+
+overboughtLine = hline(70, title="Overbought Level", color=color.new(color.red, 50), linestyle=hline.style_dashed, linewidth=1)
+midLine = hline(50, title="Midline", color=color.new(color.gray, 50), linestyle=hline.style_dotted, linewidth=1)
+oversoldLine = hline(30, title="Oversold Level", color=color.new(color.green, 50), linestyle=hline.style_dashed, linewidth=1)
+
+// ============================================================================
+// BACKGROUND COLORING FOR ZONES
+// ============================================================================
+// Add subtle background colors to highlight overbought and oversold zones
+upperBoundary = hline(100, title="Upper Boundary", color=color.new(color.white, 100))
+lowerBoundary = hline(0, title="Lower Boundary", color=color.new(color.white, 100))
+fill(overboughtLine, upperBoundary, color=color.new(color.red, 95), title="Overbought Zone")
+fill(lowerBoundary, oversoldLine, color=color.new(color.green, 95), title="Oversold Zone")
+
+// ============================================================================
+// ALERTS
+// ============================================================================
+// Alert conditions for when indicators cross key levels
+mfiOverbought = ta.crossover(mfi, 70)
+mfiOversold = ta.crossunder(mfi, 30)
+rsiOverbought = ta.crossover(rsi, 70)
+rsiOversold = ta.crossunder(rsi, 30)
+
+// Create alert conditions
+alertcondition(mfiOverbought, title="MFI Overbought", message="MFI crossed above 70 - Overbought")
+alertcondition(mfiOversold, title="MFI Oversold", message="MFI crossed below 30 - Oversold")
+alertcondition(rsiOverbought, title="RSI Overbought", message="RSI crossed above 70 - Overbought")
+alertcondition(rsiOversold, title="RSI Oversold", message="RSI crossed below 30 - Oversold")
+
+// Combined alert when both indicators are in agreement
+alertcondition(mfi > 70 and rsi > 70, title="Both Overbought", message="Both MFI and RSI are Overbought")
+alertcondition(mfi < 30 and rsi < 30, title="Both Oversold", message="Both MFI and RSI are Oversold")
