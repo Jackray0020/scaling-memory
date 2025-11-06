@@ -1,0 +1,63 @@
+//@version=5
+indicator("MACD + MFI Indicator", shorttitle="MACD+MFI", overlay=false)
+
+// MACD Inputs
+macd_fast = input.int(12, title="MACD Fast Length")
+macd_slow = input.int(26, title="MACD Slow Length")
+macd_signal = input.int(9, title="MACD Signal Smoothing")
+
+// MFI Inputs
+mfi_length = input.int(14, title="MFI Length")
+mfi_overbought = input.int(80, title="MFI Overbought Level")
+mfi_oversold = input.int(20, title="MFI Oversold Level")
+
+// MACD Calculation
+[macdLine, signalLine, histLine] = ta.macd(close, macd_fast, macd_slow, macd_signal)
+
+// MFI Calculation
+mfi = ta.mfi(hlc3, mfi_length)
+
+// Plot MACD
+plot(macdLine, color=color.new(color.blue, 0), title="MACD Line")
+plot(signalLine, color=color.new(color.red, 0), title="Signal Line")
+plot(histLine, color=histLine > 0 ? color.new(color.green, 0) : color.new(color.maroon, 0), 
+     title="Histogram", style=plot.style_columns)
+
+// Plot MFI
+mfi_plot = plot(mfi, color=color.new(color.purple, 0), title="MFI", linewidth=2)
+
+// MFI Levels
+hline(mfi_overbought, "Overbought", color=color.new(color.red, 50))
+hline(mfi_oversold, "Oversold", color=color.new(color.green, 50))
+
+// Fill MFI zones
+fill(hline(mfi_overbought), mfi_plot, color=color.new(color.red, 85), title="Overbought Zone")
+fill(mfi_plot, hline(mfi_oversold), color=color.new(color.green, 85), title="Oversold Zone")
+
+// Signal Conditions
+macd_bullish = ta.crossover(macdLine, signalLine)
+macd_bearish = ta.crossunder(macdLine, signalLine)
+mfi_oversold_cross = ta.crossover(mfi, mfi_oversold)
+mfi_overbought_cross = ta.crossunder(mfi, mfi_overbought)
+
+// Combined Signals
+strong_buy = macd_bullish and mfi_oversold_cross
+strong_sell = macd_bearish and mfi_overbought_cross
+buy = macd_bullish and mfi < mfi_overbought
+sell = macd_bearish and mfi > mfi_oversold
+
+// Plot Signals on MACD
+plotshape(strong_buy, title="Strong Buy", location=location.bottom, 
+          style=shape.triangleup, size=size.small, color=color.new(color.green, 0))
+plotshape(strong_sell, title="Strong Sell", location=location.top, 
+          style=shape.triangledown, size=size.small, color=color.new(color.red, 0))
+plotshape(buy and not strong_buy, title="Buy", location=location.bottom, 
+          style=shape.circle, size=size.tiny, color=color.new(color.lime, 0))
+plotshape(sell and not strong_sell, title="Sell", location=location.top, 
+          style=shape.circle, size=size.tiny, color=color.new(color.orange, 0))
+
+// Alert Conditions
+alertcondition(strong_buy, title="Strong Buy Signal", message="MACD bullish crossover with MFI oversold recovery")
+alertcondition(strong_sell, title="Strong Sell Signal", message="MACD bearish crossover with MFI overbought decline")
+alertcondition(buy, title="Buy Signal", message="MACD bullish crossover")
+alertcondition(sell, title="Sell Signal", message="MACD bearish crossover")
