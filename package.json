@@ -1,0 +1,39 @@
+{
+  "name": "mcp-time-schedule-server",
+  "version": "1.0.0",
+  "description": "MCP server for time schedule tasks with rtrvr.ai web agent integration",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "lint": "eslint .",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "time-schedule",
+    "rtrvr-ai",
+    "web-agent"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "node-cron": "^3.0.3",
+    "axios": "^1.6.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "@types/node-cron": "^3.0.11",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.55.0",
+    "globals": "^13.24.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
+  }
+}
