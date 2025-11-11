@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "time-schedule": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": {
+        "RTRVR_API_URL": "https://api.rtrvr.ai",
+        "RTRVR_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
