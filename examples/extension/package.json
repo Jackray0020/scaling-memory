@@ -1,0 +1,19 @@
+{
+  "name": "@scaling-memory/extension-example",
+  "version": "1.0.0",
+  "description": "Browser extension example using LLM layer for content analysis",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@scaling-memory/shared": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.246",
+    "@types/node": "^20.9.0",
+    "typescript": "^5.2.2"
+  }
+}
