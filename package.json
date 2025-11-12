@@ -1,0 +1,22 @@
+{
+  "name": "scaling-memory",
+  "version": "1.0.0",
+  "description": "MCP client implementation with shared package and examples",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "client"
+  ],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@scaling-memory/electron-example",
+  "version": "1.0.0",
+  "description": "Electron example using MCP client",
+  "main": "dist/mcp-demo.js",
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "keywords": [
+    "electron",
+    "mcp"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@scaling-memory/shared": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
