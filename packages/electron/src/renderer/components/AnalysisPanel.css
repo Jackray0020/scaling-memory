@@ -1,0 +1,209 @@
+.analysis-panel {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.analysis-panel h2 {
+  margin-bottom: 16px;
+  color: #333;
+  font-size: 18px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #555;
+  font-size: 13px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  font-family: 'Courier New', monospace;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.analyze-btn {
+  flex: 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 10px 16px;
+  font-weight: 500;
+}
+
+.analyze-btn:hover:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.sample-btn {
+  background: #e9ecef;
+  color: #333;
+  padding: 10px 16px;
+  font-weight: 500;
+}
+
+.sample-btn:hover:not(:disabled) {
+  background: #dee2e6;
+}
+
+.results {
+  margin-top: 24px;
+}
+
+.results h3 {
+  margin-bottom: 12px;
+  color: #333;
+  font-size: 16px;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.result-item {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.result-item h4 {
+  margin-bottom: 4px;
+  color: #333;
+  font-size: 14px;
+}
+
+.result-item .url {
+  color: #667eea;
+  font-size: 12px;
+  margin-bottom: 8px;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.result-item .summary {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.insights {
+  margin: 8px 0;
+  padding: 8px 0 0 0;
+  border-top: 1px solid #dee2e6;
+}
+
+.insights strong {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: #555;
+}
+
+.insights ul {
+  margin-left: 20px;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.insights li {
+  margin-bottom: 2px;
+}
+
+.trading-signals {
+  margin: 8px 0;
+  padding: 8px 0 0 0;
+  border-top: 1px solid #dee2e6;
+}
+
+.trading-signals strong {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: #555;
+}
+
+.signal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 4px;
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.signal-bullish {
+  background: #d4edda;
+  color: #155724;
+}
+
+.signal-bearish {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.signal-neutral {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.signal .type {
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.signal .confidence {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.signal p {
+  margin: 0;
+  font-size: 11px;
+  width: 100%;
+}
+
+.metadata {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #dee2e6;
+  font-size: 11px;
+  color: #999;
+}
+
+.metadata .provider {
+  background: #e7f3ff;
+  color: #0066cc;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-weight: 600;
+}

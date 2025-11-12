@@ -1,0 +1,22 @@
+{
+  "name": "ai-browsing-workflow",
+  "version": "1.0.0",
+  "description": "End-to-end AI browsing analysis pipeline for both Electron and extension",
+  "private": true,
+  "workspaces": [
+    "packages/core",
+    "packages/electron",
+    "packages/extension"
+  ],
+  "scripts": {
+    "install-all": "npm install",
+    "build": "npm run build --workspaces",
+    "dev": "npm run dev --workspaces",
+    "type-check": "npm run type-check --workspaces",
+    "lint": "npm run lint --workspaces"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

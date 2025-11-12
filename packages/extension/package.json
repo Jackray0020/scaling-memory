@@ -1,0 +1,19 @@
+{
+  "name": "@ai-browsing/extension",
+  "version": "1.0.0",
+  "description": "Browser extension for AI browsing analysis",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack watch",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-browsing/core": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^5.0.0"
+  }
+}

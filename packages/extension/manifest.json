@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "AI Browsing Analyzer",
+  "version": "1.0.0",
+  "description": "Real-time AI analysis of web pages with trading insights",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "webRequest",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "action": {
+    "default_popup": "dist/popup.html",
+    "default_icon": {
+      "16": "/images/icon-16.png",
+      "48": "/images/icon-48.png",
+      "128": "/images/icon-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/content.js"]
+    }
+  ],
+  "icons": {
+    "16": "/images/icon-16.png",
+    "48": "/images/icon-48.png",
+    "128": "/images/icon-128.png"
+  }
+}
