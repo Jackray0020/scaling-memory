@@ -1,0 +1,24 @@
+{
+  "name": "scaling-memory",
+  "version": "1.0.0",
+  "description": "Multi-provider LLM abstraction layer with OpenAI and Anthropic support",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "keywords": [
+    "llm",
+    "openai",
+    "anthropic",
+    "provider",
+    "abstraction"
+  ],
+  "author": "",
+  "license": "MIT"
+}
