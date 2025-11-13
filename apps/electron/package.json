@@ -1,0 +1,34 @@
+{
+  "name": "@scaling-memory/electron",
+  "version": "0.0.1",
+  "description": "Electron macOS application for scaling-memory",
+  "author": {
+    "name": "Scaling Memory",
+    "email": "team@scalingmemory.dev"
+  },
+  "homepage": "https://scalingmemory.dev",
+  "type": "module",
+  "main": "./dist-electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:macos": "vite build && electron-builder --mac",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@scaling-memory/shared": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.2.1",
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "vite-plugin-electron": "^0.15.6"
+  }
+}
