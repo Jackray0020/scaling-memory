@@ -1,0 +1,15 @@
+{
+  "name": "scaling-memory-monorepo",
+  "version": "0.0.1",
+  "description": "Scaling memory monorepo with Electron app",
+  "private": true,
+  "scripts": {
+    "dev:electron": "pnpm --filter @scaling-memory/electron dev",
+    "build:electron": "pnpm --filter @scaling-memory/electron build",
+    "build:electron:macos": "pnpm --filter @scaling-memory/electron build:macos",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
+  }
+}
