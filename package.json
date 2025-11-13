@@ -1,0 +1,19 @@
+{
+  "name": "scaling-memory",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Chrome extension for memory scaling and page content capture",
+  "scripts": {
+    "dev:extension": "pnpm --filter extension dev",
+    "build:extension": "pnpm --filter extension build",
+    "build": "pnpm --filter extension build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
