@@ -1,0 +1,19 @@
+{
+  "name": "@scaling-memory/extension-app",
+  "version": "0.0.1",
+  "description": "Browser extension application using shared core",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"No tests for extension-app scaffold yet\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@scaling-memory/shared": "file:../shared"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3"
+  }
+}
