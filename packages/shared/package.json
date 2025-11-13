@@ -1,0 +1,59 @@
+{
+  "name": "@scaling-memory/shared",
+  "version": "0.0.1",
+  "description": "Shared core utilities, domain models, and interfaces for scaling-memory",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./domain": {
+      "import": "./dist/domain/index.js",
+      "types": "./dist/domain/index.d.ts"
+    },
+    "./config": {
+      "import": "./dist/config/index.js",
+      "types": "./dist/config/index.d.ts"
+    },
+    "./logging": {
+      "import": "./dist/logging/index.js",
+      "types": "./dist/logging/index.d.ts"
+    },
+    "./http": {
+      "import": "./dist/http/index.js",
+      "types": "./dist/http/index.d.ts"
+    },
+    "./messaging": {
+      "import": "./dist/messaging/index.js",
+      "types": "./dist/messaging/index.d.ts"
+    },
+    "./interfaces": {
+      "import": "./dist/interfaces/index.js",
+      "types": "./dist/interfaces/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "shared",
+    "typescript",
+    "domain-models",
+    "utilities"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}
