@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Task Scheduler</title>
+  <link rel="stylesheet" href="styles/popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>LLM Task Scheduler</h1>
+      <div class="header-actions">
+        <button id="settingsBtn" class="icon-btn" title="Settings">⚙️</button>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="tasks">Tasks</button>
+      <button class="tab-btn" data-tab="create">Create Task</button>
+      <button class="tab-btn" data-tab="logs">Logs</button>
+      <button class="tab-btn" data-tab="settings">Settings</button>
+    </nav>
+
+    <main>
+      <!-- Tasks Tab -->
+      <div id="tasksTab" class="tab-content active">
+        <div class="tasks-header">
+          <h2>Scheduled Tasks</h2>
+          <button id="refreshTasksBtn" class="btn-secondary">Refresh</button>
+        </div>
+        <div id="tasksList" class="tasks-list">
+          <p class="empty-state">No tasks scheduled. Create one to get started!</p>
+        </div>
+      </div>
+
+      <!-- Create Task Tab -->
+      <div id="createTab" class="tab-content">
+        <h2>Create New Task</h2>
+        <form id="createTaskForm">
+          <div class="form-group">
+            <label for="taskName">Task Name</label>
+            <input type="text" id="taskName" required placeholder="My Scheduled Task">
+          </div>
+
+          <div class="form-group">
+            <label for="taskType">Task Type</label>
+            <select id="taskType" required>
+              <option value="web-scraping">Web Scraping</option>
+              <option value="data-collection">Data Collection</option>
+              <option value="api-call">API Call</option>
+              <option value="custom-workflow">Custom Workflow</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="taskDescription">Task Description / Instructions</label>
+            <textarea id="taskDescription" rows="4" required placeholder="Describe what you want the LLM to do..."></textarea>
+          </div>
+
+          <div class="form-group" id="urlGroup">
+            <label for="targetUrl">Target URL (for web scraping)</label>
+            <input type="url" id="targetUrl" placeholder="https://example.com">
+          </div>
+
+          <div class="form-group" id="apiGroup" style="display: none;">
+            <label for="apiEndpoint">API Endpoint</label>
+            <input type="url" id="apiEndpoint" placeholder="https://api.example.com/endpoint">
+            <label for="apiMethod" class="mt-2">HTTP Method</label>
+            <select id="apiMethod">
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+            <label for="apiBody" class="mt-2">Request Body (JSON)</label>
+            <textarea id="apiBody" rows="3" placeholder='{"key": "value"}'></textarea>
+          </div>
+
+          <div class="form-group" id="customWorkflowGroup" style="display: none;">
+            <label for="workflowConfig">Workflow Configuration (JSON)</label>
+            <textarea id="workflowConfig" rows="4" placeholder='{"steps": [...]}'></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="llmProvider">LLM Provider</label>
+            <select id="llmProvider" required>
+              <option value="">Select Provider</option>
+              <option value="openai">OpenAI</option>
+              <option value="anthropic">Anthropic</option>
+              <option value="local">Local Model</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="llmModel">Model</label>
+            <input type="text" id="llmModel" placeholder="gpt-4, claude-3-opus, etc.">
+          </div>
+
+          <div class="form-group">
+            <label for="scheduleType">Schedule Type</label>
+            <select id="scheduleType" required>
+              <option value="interval">Simple Interval</option>
+              <option value="cron">Cron Expression</option>
+              <option value="recurring">Recurring Pattern</option>
+              <option value="once">One-time</option>
+            </select>
+          </div>
+
+          <div id="intervalGroup" class="form-group">
+            <label for="intervalValue">Interval Value</label>
+            <input type="number" id="intervalValue" min="1" value="5">
+            <select id="intervalUnit">
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+              <option value="days">Days</option>
+            </select>
+          </div>
+
+          <div id="cronGroup" class="form-group" style="display: none;">
+            <label for="cronExpression">Cron Expression</label>
+            <input type="text" id="cronExpression" placeholder="*/5 * * * *">
+            <small>Format: minute hour day month weekday</small>
+          </div>
+
+          <div id="recurringGroup" class="form-group" style="display: none;">
+            <label for="recurringPattern">Pattern</label>
+            <select id="recurringPattern">
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+            <label for="recurringTime" class="mt-2">Time</label>
+            <input type="time" id="recurringTime" value="09:00">
+          </div>
+
+          <div id="onceGroup" class="form-group" style="display: none;">
+            <label for="onceDateTime">Date & Time</label>
+            <input type="datetime-local" id="onceDateTime">
+          </div>
+
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="taskEnabled" checked>
+              Enable task immediately
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Create Task</button>
+            <button type="reset" class="btn-secondary">Reset</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Logs Tab -->
+      <div id="logsTab" class="tab-content">
+        <div class="logs-header">
+          <h2>Execution Logs</h2>
+          <button id="clearLogsBtn" class="btn-secondary">Clear Logs</button>
+        </div>
+        <div id="logsList" class="logs-list">
+          <p class="empty-state">No execution logs yet.</p>
+        </div>
+      </div>
+
+      <!-- Settings Tab -->
+      <div id="settingsTab" class="tab-content">
+        <h2>LLM Provider Settings</h2>
+        
+        <div class="settings-section">
+          <h3>OpenAI</h3>
+          <div class="form-group">
+            <label for="openaiApiKey">API Key</label>
+            <input type="password" id="openaiApiKey" placeholder="sk-...">
+          </div>
+          <div class="form-group">
+            <label for="openaiDefaultModel">Default Model</label>
+            <input type="text" id="openaiDefaultModel" placeholder="gpt-4" value="gpt-4">
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Anthropic</h3>
+          <div class="form-group">
+            <label for="anthropicApiKey">API Key</label>
+            <input type="password" id="anthropicApiKey" placeholder="sk-ant-...">
+          </div>
+          <div class="form-group">
+            <label for="anthropicDefaultModel">Default Model</label>
+            <input type="text" id="anthropicDefaultModel" placeholder="claude-3-opus-20240229" value="claude-3-opus-20240229">
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Local Model</h3>
+          <div class="form-group">
+            <label for="localModelEndpoint">Endpoint URL</label>
+            <input type="url" id="localModelEndpoint" placeholder="http://localhost:11434/api/generate">
+          </div>
+          <div class="form-group">
+            <label for="localModelName">Model Name</label>
+            <input type="text" id="localModelName" placeholder="llama2">
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>General Settings</h3>
+          <div class="form-group">
+            <label for="maxRetries">Max Retries on Failure</label>
+            <input type="number" id="maxRetries" min="0" max="10" value="3">
+          </div>
+          <div class="form-group">
+            <label for="timeout">Request Timeout (seconds)</label>
+            <input type="number" id="timeout" min="5" max="300" value="60">
+          </div>
+        </div>
+
+        <button id="saveSettingsBtn" class="btn-primary">Save Settings</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
