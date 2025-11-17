@@ -1,6 +1,6 @@
 # LLM Task Scheduler Chrome Extension
 
-A powerful Chrome extension that enables users to schedule and automate tasks using any LLM provider (OpenAI, Anthropic, local models) to complete them.
+A powerful Chrome extension that enables users to schedule and automate tasks using any LLM provider (OpenAI, Anthropic, Google Gemini, OpenRouter, local models) to complete them.
 
 ## Features
 
@@ -13,6 +13,8 @@ A powerful Chrome extension that enables users to schedule and automate tasks us
 ### LLM Provider Support
 - **OpenAI**: GPT-4, GPT-3.5, and other OpenAI models
 - **Anthropic**: Claude 3 Opus, Sonnet, and Haiku models
+- **Google Gemini**: Gemini Pro and other Google models
+- **OpenRouter**: Access to multiple models through OpenRouter's unified API
 - **Local Models**: Support for local LLM endpoints (Ollama, LM Studio, etc.)
 
 ### Scheduling Options
@@ -46,6 +48,8 @@ A powerful Chrome extension that enables users to schedule and automate tasks us
 3. Configure your LLM provider(s):
    - **OpenAI**: Enter your API key (starts with `sk-`)
    - **Anthropic**: Enter your API key (starts with `sk-ant-`)
+   - **Google Gemini**: Enter your API key (starts with `AIza`)
+   - **OpenRouter**: Enter your API key (starts with `sk-or-`)
    - **Local Model**: Enter your local endpoint URL and model name
 4. Click "Save Settings"
 

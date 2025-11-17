@@ -292,6 +292,16 @@ async function loadSettings() {
       document.getElementById('anthropicDefaultModel').value = settings.anthropic.defaultModel || 'claude-3-opus-20240229';
     }
     
+    if (settings.gemini) {
+      document.getElementById('geminiApiKey').value = settings.gemini.apiKey || '';
+      document.getElementById('geminiDefaultModel').value = settings.gemini.defaultModel || 'gemini-pro';
+    }
+    
+    if (settings.openrouter) {
+      document.getElementById('openrouterApiKey').value = settings.openrouter.apiKey || '';
+      document.getElementById('openrouterDefaultModel').value = settings.openrouter.defaultModel || 'anthropic/claude-3-opus';
+    }
+    
     if (settings.local) {
       document.getElementById('localModelEndpoint').value = settings.local.endpoint || '';
       document.getElementById('localModelName').value = settings.local.modelName || '';
@@ -315,6 +325,14 @@ async function saveSettings() {
     anthropic: {
       apiKey: document.getElementById('anthropicApiKey').value,
       defaultModel: document.getElementById('anthropicDefaultModel').value
+    },
+    gemini: {
+      apiKey: document.getElementById('geminiApiKey').value,
+      defaultModel: document.getElementById('geminiDefaultModel').value
+    },
+    openrouter: {
+      apiKey: document.getElementById('openrouterApiKey').value,
+      defaultModel: document.getElementById('openrouterDefaultModel').value
     },
     local: {
       endpoint: document.getElementById('localModelEndpoint').value,

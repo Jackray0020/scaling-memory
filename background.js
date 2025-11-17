@@ -21,6 +21,8 @@ async function initializeStorage() {
       settings: {
         openai: { apiKey: '', defaultModel: 'gpt-4' },
         anthropic: { apiKey: '', defaultModel: 'claude-3-opus-20240229' },
+        gemini: { apiKey: '', defaultModel: 'gemini-pro' },
+        openrouter: { apiKey: '', defaultModel: 'anthropic/claude-3-opus' },
         local: { endpoint: '', modelName: '' },
         general: { maxRetries: 3, timeout: 60 }
       }
@@ -352,6 +354,10 @@ async function callLLM(task, contextData, settings) {
     return await callOpenAI(prompt, model, settings.openai);
   } else if (provider === 'anthropic') {
     return await callAnthropic(prompt, model, settings.anthropic);
+  } else if (provider === 'gemini') {
+    return await callGemini(prompt, model, settings.gemini);
+  } else if (provider === 'openrouter') {
+    return await callOpenRouter(prompt, model, settings.openrouter);
   } else if (provider === 'local') {
     return await callLocalModel(prompt, model, settings.local);
   } else {
@@ -442,6 +448,82 @@ async function callLocalModel(prompt, model, config) {
   
   const data = await response.json();
   return data.response || data.text || JSON.stringify(data);
+}
+
+async function callGemini(prompt, model, config) {
+  if (!config.apiKey) {
+    throw new Error('Google Gemini API key not configured');
+  }
+  
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model || config.defaultModel || 'gemini-pro'}:generateContent?key=${config.apiKey}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      contents: [
+        {
+          parts: [
+            {
+              text: prompt
+            }
+          ]
+        }
+      ],
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 4096
+      }
+    })
+  });
+  
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Google Gemini API error: ${error}`);
+  }
+  
+  const data = await response.json();
+  if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
+    return data.candidates[0].content.parts[0].text;
+  } else {
+    throw new Error('Invalid response from Google Gemini API');
+  }
+}
+
+async function callOpenRouter(prompt, model, config) {
+  if (!config.apiKey) {
+    throw new Error('OpenRouter API key not configured');
+  }
+  
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${config.apiKey}`,
+      'HTTP-Referer': 'https://github.com/chrome-extension-llm-task-scheduler',
+      'X-Title': 'LLM Task Scheduler'
+    },
+    body: JSON.stringify({
+      model: model || config.defaultModel || 'anthropic/claude-3-opus',
+      messages: [
+        { role: 'user', content: prompt }
+      ],
+      temperature: 0.7,
+      max_tokens: 4096
+    })
+  });
+  
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`OpenRouter API error: ${error}`);
+  }
+  
+  const data = await response.json();
+  if (data.choices && data.choices[0] && data.choices[0].message) {
+    return data.choices[0].message.content;
+  } else {
+    throw new Error('Invalid response from OpenRouter API');
+  }
 }
 
 async function getLogs() {
