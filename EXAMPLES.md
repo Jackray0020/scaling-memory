@@ -332,6 +332,54 @@ Time: 09:00
 
 ---
 
+## Example 7: AI-Powered Content Summarization with Google Gemini
+
+**Use Case**: Summarize news articles from multiple sources using Google Gemini.
+
+**Configuration**:
+```
+Task Name: Daily News Summarizer
+Task Type: Web Scraping
+Description: Read and summarize the main news stories from these sources. Focus on key events, impact analysis, and important trends. Provide a concise summary in bullet points.
+
+Target URL: https://news.example.com/tech
+
+LLM Provider: Google Gemini
+Model: gemini-pro
+
+Schedule Type: Recurring
+Pattern: Daily
+Time: 07:00
+```
+
+**Expected Output**: Daily brief with key news stories summarized in easy-to-digest bullet points.
+
+---
+
+## Example 8: Cross-Model Analysis with OpenRouter
+
+**Use Case**: Compare different LLM model outputs for the same data to get diverse perspectives.
+
+**Configuration**:
+```
+Task Name: Multi-Model Market Analysis
+Task Type: API Call
+Description: Analyze this market data from multiple perspectives. Provide insights on trends, risks, and opportunities. Consider different analytical approaches.
+
+API Endpoint: https://api.example.com/market/crypto
+Method: GET
+
+LLM Provider: OpenRouter
+Model: meta-llama/llama-3-70b-instruct
+
+Schedule Type: Interval
+Interval: 6 hours
+```
+
+**Expected Output**: Diverse analytical insights leveraging OpenRouter's access to multiple high-performance models.
+
+---
+
 ## Tips for Writing Effective Task Descriptions
 
 1. **Be Specific**: Clearly state what you want the LLM to do with the data
@@ -369,6 +417,30 @@ For advanced scheduling, use cron expressions:
 - `0 12 * * 0` - Every Sunday at noon
 - `30 14 * * *` - Every day at 2:30 PM
 - `0 6,18 * * *` - Twice daily at 6 AM and 6 PM
+
+---
+
+## Google Gemini Setup
+
+To use Google Gemini:
+
+1. Go to Google AI Studio: https://aistudio.google.com/app/apikey
+2. Create a new API key
+3. Configure in extension:
+   - API Key: Your Gemini API key (starts with `AIza`)
+   - Default Model: `gemini-pro` or `gemini-pro-vision`
+
+---
+
+## OpenRouter Setup
+
+To use OpenRouter:
+
+1. Sign up at https://openrouter.ai
+2. Generate an API key from your dashboard
+3. Configure in extension:
+   - API Key: Your OpenRouter API key (starts with `sk-or-`)
+   - Default Model: Choose from available models (e.g., `anthropic/claude-3-opus`, `meta-llama/llama-3-70b-instruct`)
 
 ---
 
